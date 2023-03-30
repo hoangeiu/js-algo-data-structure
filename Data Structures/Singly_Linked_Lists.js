@@ -138,6 +138,29 @@ class SinglyLinkedList {
 
     return this;
   }
+
+  rotate(time) {
+    if (time > 0) {
+      for (let i = 0; i < time; i++) {
+        let current = this.head;
+        this.head = current.next;
+        this.tail.next = current;
+        this.tail = current;
+        current.next = null;
+      }
+    } else if (time < 0) {
+      for (let i = time; i < 0; i++) {
+        let current = this.tail;
+        let prevTail = this.get(this.length - 2);
+        this.tail = prevTail;
+        this.tail.next = null;
+        current.next = this.head;
+        this.head = current;
+      }
+    }
+
+    return this;
+  }
 }
 
 var list = new SinglyLinkedList();
@@ -159,7 +182,9 @@ list.push("LATER");
 
 // console.log(list.remove(3));
 
-list.reverse();
+// list.reverse();
+
+list.rotate(-2);
 
 console.log(list);
 
