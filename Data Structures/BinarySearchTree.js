@@ -112,6 +112,80 @@ class BinarySearchTree {
 
     return data;
   }
+
+  remove(value) {
+    const minValue = this.minValue;
+    let removedNode = undefined;
+    function deleteRec(root, value) {
+      if (root === null) return root;
+
+      if (value < root.value) {
+        root.left = deleteRec(root.left, value);
+      } else if (value > root.value) {
+        root.right = deleteRec(root.right, value);
+      } else {
+        if (root.left === null) {
+          removedNode = root;
+          return root.right;
+        } else if (root.right === null) {
+          removedNode = root;
+          return root.left;
+        }
+        removedNode = root;
+        root.value = minValue(root.right);
+        root.right = deleteRec(root.right, root.value);
+      }
+
+      return root;
+    }
+    deleteRec(this.root, value);
+    return removedNode;
+  }
+
+  minValue(root) {
+    let minv = root.value;
+    while (root.left) {
+      minv = root.left.value;
+      root = root.left;
+    }
+    return minv;
+  }
+
+  findSecondLargest() {
+    if (!this.root) return undefined;
+    let prevRoot = this.root;
+    let current = this.root;
+    while (current.right) {
+      prevRoot = current;
+      current = current.right;
+    }
+    return prevRoot.value;
+  }
+
+  isBalanced() {
+    function height(root) {
+      if (root == null) return 0;
+      return Math.max(height(root.left), height(root.right)) + 1;
+    }
+
+    function helper(root) {
+      if (root == null) return true;
+
+      let leftHeight = height(root.left);
+      let rightHeight = height(root.right);
+      // debugger;
+      if (
+        Math.abs(leftHeight - rightHeight) <= 1 &&
+        helper(root.left) &&
+        helper(root.right)
+      )
+        return true;
+
+      return false;
+    }
+
+    return helper(this.root);
+  }
 }
 
 //      10
@@ -137,3 +211,73 @@ console.log(tree.DFS_PostOrder());
 console.log(tree.DFS_InOrder());
 
 console.log(tree);
+
+// WILD WEST
+console.log("---WELCOME TO WILD WEST, READY TO GET CHALLENGE---");
+
+//     15
+//  10     20
+//1    5      50
+
+//         15
+//     10     20
+//  1    12      50
+//    5
+
+//         15
+//     10     20
+//  1    12       50
+//    5        30     60
+//           25           70
+//         23
+//           24
+var binarySearchTree = new BinarySearchTree();
+binarySearchTree
+  .insert(15)
+  .insert(20)
+  .insert(10)
+  .insert(12)
+  .insert(1)
+  .insert(5)
+  .insert(50);
+console.log(binarySearchTree.remove(50));
+console.log(binarySearchTree);
+
+binarySearchTree = new BinarySearchTree();
+binarySearchTree
+  .insert(15)
+  .insert(20)
+  .insert(10)
+  .insert(12)
+  .insert(1)
+  .insert(5)
+  .insert(50);
+
+console.log(binarySearchTree.remove(1));
+console.log(binarySearchTree);
+
+binarySearchTree = new BinarySearchTree();
+binarySearchTree
+  .insert(15)
+  .insert(20)
+  .insert(10)
+  .insert(12)
+  .insert(1)
+  .insert(5)
+  .insert(50)
+  .insert(60)
+  .insert(30)
+  .insert(25)
+  .insert(23)
+  .insert(24)
+  .insert(70);
+
+console.log(binarySearchTree.remove(10));
+console.log(binarySearchTree);
+
+binarySearchTree = new BinarySearchTree();
+binarySearchTree.insert(15);
+binarySearchTree.insert(20);
+binarySearchTree.insert(10);
+binarySearchTree.insert(12);
+console.log(binarySearchTree.isBalanced()); // true

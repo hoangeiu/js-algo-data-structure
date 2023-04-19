@@ -16,4 +16,4 @@ function selectionSort(arr) {
   return arr;
 }
 
-console.log(selectionSort([29, 10, 14, 37, 14]));
+console.log(selectionSort([4, 20, 12, 10, 7, 9]));

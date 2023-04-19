@@ -4,10 +4,12 @@ function bubbleSort(arr) {
   };
 
   for (let i = arr.length - 1; i > 0; i--) {
+    console.log("------------");
     let noSwaps = true;
-    for (let j = 0; j < i - 1; j++) {
+    for (let j = 0; j <= i - 1; j++) {
       if (arr[j] > arr[j + 1]) {
         swap(arr, j, j + 1);
+        console.log(arr);
         noSwaps = false;
       }
     }
@@ -17,4 +19,4 @@ function bubbleSort(arr) {
   return arr;
 }
 
-console.log(bubbleSort([4, 24, 1, 30]));
+console.log(bubbleSort([4, 20, 12, 10, 7, 9]));
